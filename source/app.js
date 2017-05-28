@@ -14,34 +14,37 @@ module.exports = (separator, method) => {
   separator = separator ? separator : defaultSeparator
   method = method ? method : defaultMethod
   
+  /**
+   * Calculates HMAC using predefined separator and method.
+   *
+   * @param {string[]} listOfProperties List of elements to concantenate together with the separator
+   * @param {string[]} key Key to create hmac with.
+   * @returns {string} HMAC value for combined list of strings with the given separator.
+   */
+  const calculate = (listOfProperties, key) => {
+    const query = R.apply(
+      (left, right) => `${left}${separator}${right}`,
+      listOfProperties
+    )
+    .toUpperCase()
+        
+    return crypto.createHmac(method, key)
+      .update(query)
+      .digest('hex')
+  }
+  
+  /**
+   * Validates if the calculated signature matches the given.
+   *
+   * @param {string[]} listOfProperties List of elements to concantenate together with the separator
+   * @param {string[]} key Key to create hmac with.
+   * @param {string} signature Ready calculated signature
+   * @returns {boolean} true when calculated matches given signature, false otherwise.
+   */
+  const isValid = (listOfProperties, key, signature) => calculate(listOfProperties, key) === signature
+  
   return {
-    /**
-     * Calculates HMAC using predefined separator and method.
-     *
-     * @param {string[]} listOfProperties List of elements to concantenate together with the separator
-     * @param {string[]} key Key to create hmac with.
-     * @returns {string} HMAC value for combined list of strings with the given separator.
-     */
-    calculate: (listOfProperties, key) => {
-      const query = R.apply(
-        (left, right) => `${left}${separator}${right}`,
-        listOfProperties
-      )
-      .toUpperCase()
-          
-      return crypto.createHmac(method, key)
-        .update(query)
-        .digest('hex')
-    },
-    
-    /**
-     * Validates if the calculated signature matches the given.
-     *
-     * @param {string[]} listOfProperties List of elements to concantenate together with the separator
-     * @param {string[]} key Key to create hmac with.
-     * @param {string} signature Ready calculated signature
-     * @returns {boolean} true when calculated matches given signature, false otherwise.
-     */
-    isValid: (listOfProperties, key, signature) => calculate(listOfProperties, key) === signature
+    calculate,
+    isValid
   }
 }
