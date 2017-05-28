@@ -6,12 +6,16 @@
   "author": "Mika Turunen <mika.turunen@ymail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node source/app"
+    "start": "node source/app",
+    "test": "mocha source/tests/app.js"
   },
   "dependencies": {
     "ramda": "0.24.0"
   },
-  "engines" : { 
-    "node" : ">=6.10.3" 
-  } 
+  "devDependencies": {
+    "mocha": "3.4.2"
+  },
+  "engines": {
+    "node": ">=6.10.3"
+  }
 }
