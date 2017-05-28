@@ -1,6 +1,6 @@
 {
   "name": "hmac-validator",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "main": "source/app.js",
   "repository": "git@github.com:mikaturunen/byop.git",
   "author": "Mika Turunen <mika.turunen@ymail.com>",
@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "ramda": "0.24.0"
-  }
+  },
+  "engines" : { 
+    "node" : ">=6.10.3" 
+  } 
 }
