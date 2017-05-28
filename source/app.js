@@ -45,6 +45,3 @@ module.exports = (separator, method) => {
     isValid: (listOfProperties, key, signature) => calculate(listOfProperties, key) === signature
   }
 }
-
-  
-}
