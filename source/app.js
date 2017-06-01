@@ -21,17 +21,11 @@ module.exports = (separator, method) => {
    * @param {string[]} key Key to create hmac with.
    * @returns {string} HMAC value for combined list of strings with the given separator.
    */
-  const calculate = (listOfProperties, key) => {
-    const query = R.apply(
-      (left, right) => `${left}${separator}${right}`,
-      listOfProperties
+  const calculate = (listOfProperties, key) => crypto.createHmac(method, key)
+    .update(
+      R.apply((left, right) => `${left}${separator}${right}`, listOfProperties).toUpperCase()
     )
-    .toUpperCase()
-        
-    return crypto.createHmac(method, key)
-      .update(query)
-      .digest('hex')
-  }
+    .digest('hex')
   
   /**
    * Validates if the calculated signature matches the given.
